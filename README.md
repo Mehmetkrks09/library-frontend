@@ -4,6 +4,11 @@ A full-stack library management system with secure JWT authentication and a mode
 
 ---
 
+## 📸 Screenshots
+
+![Login](screenshots/login.png)
+![Menu](screenshots/menu.png)
+
 ## 🚀 Features
 
 ### ✅ Frontend
@@ -39,7 +44,4 @@ A full-stack library management system with secure JWT authentication and a mode
 
 ---
 
-## 📸 Screenshots
 
-![Login](screenshots/login.png)
-![Menu](screenshots/menu.png)
