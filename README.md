@@ -8,6 +8,7 @@ A full-stack library management system with secure JWT authentication and a mode
 
 ![Login](screenshots/login.png)
 ![Menu](screenshots/menu.png)
+![AddBook](screenshots/addbook.png)
 
 ## 🚀 Features
 
