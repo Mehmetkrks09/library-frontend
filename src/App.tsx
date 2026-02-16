@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 import Login from "./components/Login";
 import AddBook from "./components/AddBook";
+import BookItem from "./components/BookItem";
 
 interface Book {
   id: number;
   isim: string;
   yazar: string;
+  sayfaSayisi: number;
 }
 
 function App() {
@@ -95,12 +97,15 @@ function App() {
               No books found. Add your first book!
             </p>
           ) : (
-            <ul className="space-y-2">
+            <ul className="space-y-3">
               {books.map((book) => (
-                <li key={book.id} className="p-3 bg-gray-50 rounded">
-                  <p className="font-medium">{book.isim}</p>
-                  <p className="text-sm text-gray-600">by {book.yazar}</p>
-                </li>
+                <BookItem
+                  key={book.id}
+                  book={book}
+                  token={token!}
+                  onBookUpdated={fetchBooks}
+                  onBookDeleted={fetchBooks}
+                />
               ))}
             </ul>
           )}
