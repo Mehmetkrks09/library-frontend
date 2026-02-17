@@ -15,38 +15,36 @@ export default function Login({ onLoginSuccess }: LoginProps) {
     e.preventDefault();
     setError("");
     setLoading(true);
-
     const endpoint = isLogin ? "/api/auth/login" : "/api/auth/register";
-
     try {
       const response = await fetch(`http://localhost:8080${endpoint}`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
       });
-
-      const data = await response.json();
-
       if (response.ok) {
+        const data = await response.json();
         if (isLogin && data.token) {
           localStorage.setItem("token", data.token);
           localStorage.setItem("username", data.username);
           onLoginSuccess(data.token);
         } else {
-          // Register successful, switch to login
           setIsLogin(true);
           setError("Registration successful! Please login.");
           setPassword("");
         }
       } else {
-        setError(data.message || "An error occurred");
+        try {
+          const errorData = await response.json();
+          setError(errorData.message || "Invalid username or password");
+        } catch {
+          setError("Invalid username or password");
+        }
       }
     } catch {
       setError("Failed to connect to server");
     } finally {
-      setLoading(false);
+      setLoading(false); // ← EKLENDI
     }
   };
 

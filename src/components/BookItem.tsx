@@ -1,10 +1,15 @@
 import { useState } from 'react'
+import toast from 'react-hot-toast'
 
 interface Book {
   id: number
   isim: string
   yazar: string
   sayfaSayisi: number
+  category: {        // ← EKLE
+    id: number
+    isim: string
+  } | null
 }
 
 interface BookItemProps {
@@ -42,11 +47,14 @@ export default function BookItem({ book, token, onBookUpdated, onBookDeleted }: 
       if (response.ok) {
         setIsEditing(false)
         onBookUpdated()
+        toast.success('Book updated successfully!')
       } else {
         setError('Failed to update book')
+        toast.error('Something went wrong!')
       }
     } catch {
       setError('Network error')
+      toast.error('Network error. Please try again.')
     } finally {
       setLoading(false)
     }
@@ -69,11 +77,14 @@ export default function BookItem({ book, token, onBookUpdated, onBookDeleted }: 
 
       if (response.ok) {
         onBookDeleted()
+        toast.success('Book deleted successfully!')
       } else {
         setError('Failed to delete book')
+        toast.error('Something went wrong!')
       }
     } catch {
       setError('Network error')
+      toast.error('Network error. Please try again.')
     } finally {
       setLoading(false)
     }
@@ -132,10 +143,17 @@ export default function BookItem({ book, token, onBookUpdated, onBookDeleted }: 
   return (
     <li className="p-4 bg-white border border-gray-200 rounded-lg flex justify-between items-start">
       <div>
-        <p className="font-medium text-lg">{book.isim}</p>
-        <p className="text-sm text-gray-600">by {book.yazar}</p>
-        <p className="text-xs text-gray-500 mt-1">{book.sayfaSayisi} pages</p>
-      </div>
+  <p className="font-medium text-lg">{book.isim}</p>
+  <p className="text-sm text-gray-600">by {book.yazar}</p>
+  <div className="flex gap-3 mt-1">
+    <p className="text-xs text-gray-500">{book.sayfaSayisi} pages</p>
+    {book.category && (
+      <span className="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">
+        {book.category.isim}
+      </span>
+    )}
+  </div>
+</div>
       
       <div className="flex gap-2">
         <button

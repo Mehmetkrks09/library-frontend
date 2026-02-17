@@ -2,12 +2,18 @@ import { useState, useEffect } from "react";
 import Login from "./components/Login";
 import AddBook from "./components/AddBook";
 import BookItem from "./components/BookItem";
+import { Toaster } from "react-hot-toast";
+import Spinner from "./components/Spinner";
 
 interface Book {
   id: number;
   isim: string;
   yazar: string;
   sayfaSayisi: number;
+  category: {
+    id: number;
+    isim: string;
+  } | null;
 }
 
 function App() {
@@ -86,16 +92,21 @@ function App() {
       </nav>
 
       <main className="max-w-7xl mx-auto px-4 py-8">
-        <AddBook token={token!} onBookAdded={fetchBooks} />
         <div className="bg-white rounded-lg shadow p-6">
-          <h2 className="text-xl font-semibold mb-4">Books</h2>
-
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-xl font-semibold">Books</h2>
+            <AddBook token={token!} onBookAdded={fetchBooks} />
+          </div>
           {loading ? (
-            <p className="text-gray-500">Loading...</p>
+            <Spinner />
           ) : books.length === 0 ? (
-            <p className="text-gray-500">
-              No books found. Add your first book!
-            </p>
+            <div className="text-center py-16">
+              <p className="text-6xl mb-4">📚</p>
+              <p className="text-xl font-medium text-gray-700">No books yet</p>
+              <p className="text-gray-500 mt-1">
+                Click "+ Add Book" to add your first book!
+              </p>
+            </div>
           ) : (
             <ul className="space-y-3">
               {books.map((book) => (
@@ -111,6 +122,7 @@ function App() {
           )}
         </div>
       </main>
+      <Toaster position="top-right" />
     </div>
   );
 }
