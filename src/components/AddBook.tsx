@@ -31,7 +31,7 @@ const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(
 
     try {
       const response = await fetch(
-        "http://localhost:8080/api/kitaplar/addBook",
+        `${import.meta.env.VITE_API_URL}/api/kitaplar/addBook`,
         {
           method: "POST",
           headers: {
@@ -61,7 +61,7 @@ const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(
   const handleOpen = async () => {
     setIsOpen(true);
     try {
-      const response = await fetch("http://localhost:8080/api/kategoriler", {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/kategoriler`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await response.json();

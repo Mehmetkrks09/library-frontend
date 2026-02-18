@@ -1,4 +1,5 @@
 import { useState } from "react";
+import ThemeToggle from './ThemeToggle'
 
 interface LoginProps {
   onLoginSuccess: (token: string) => void;
@@ -17,7 +18,7 @@ export default function Login({ onLoginSuccess }: LoginProps) {
     setLoading(true);
     const endpoint = isLogin ? "/api/auth/login" : "/api/auth/register";
     try {
-      const response = await fetch(`http://localhost:8080${endpoint}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}${endpoint}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
@@ -44,41 +45,46 @@ export default function Login({ onLoginSuccess }: LoginProps) {
     } catch {
       setError("Failed to connect to server");
     } finally {
-      setLoading(false); // ← EKLENDI
+      setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
-      <div className="bg-white p-8 rounded-lg shadow-xl w-96">
-        <h2 className="text-3xl font-bold text-center mb-6 text-gray-800">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 transition-colors relative">
+      {/* Theme Toggle - Sağ üst köşede */}
+      <div className="absolute top-4 right-4">
+        <ThemeToggle />
+      </div>
+
+      <div className="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-xl w-96 border border-gray-200 dark:border-gray-700">
+        <h2 className="text-3xl font-bold text-center mb-6 text-gray-800 dark:text-white">
           {isLogin ? "Login" : "Register"}
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Username
             </label>
             <input
               type="text"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               required
               minLength={3}
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Password
             </label>
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               required
               minLength={6}
             />
@@ -88,8 +94,8 @@ export default function Login({ onLoginSuccess }: LoginProps) {
             <div
               className={`text-sm p-3 rounded ${
                 error.includes("successful")
-                  ? "bg-green-100 text-green-700"
-                  : "bg-red-100 text-red-700"
+                  ? "bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-200"
+                  : "bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-200"
               }`}
             >
               {error}
@@ -99,7 +105,7 @@ export default function Login({ onLoginSuccess }: LoginProps) {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 disabled:bg-gray-400 transition-colors font-medium"
+            className="w-full bg-blue-600 dark:bg-blue-700 text-white py-2 rounded-lg hover:bg-blue-700 dark:hover:bg-blue-800 disabled:bg-gray-400 transition-colors font-medium"
           >
             {loading ? "Loading..." : isLogin ? "Login" : "Register"}
           </button>
@@ -112,7 +118,7 @@ export default function Login({ onLoginSuccess }: LoginProps) {
               setError("");
               setPassword("");
             }}
-            className="text-blue-600 hover:underline text-sm"
+            className="text-blue-600 dark:text-blue-400 hover:underline text-sm"
           >
             {isLogin
               ? "Don't have an account? Register"

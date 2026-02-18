@@ -6,7 +6,7 @@ interface Book {
   isim: string
   yazar: string
   sayfaSayisi: number
-  category: {        // ← EKLE
+  category: {
     id: number
     isim: string
   } | null
@@ -35,7 +35,7 @@ export default function BookItem({ book, token, onBookUpdated, onBookDeleted }: 
     setError('')
 
     try {
-      const response = await fetch(`http://localhost:8080/api/kitaplar/update/${book.id}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/kitaplar/update/${book.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -68,7 +68,7 @@ export default function BookItem({ book, token, onBookUpdated, onBookDeleted }: 
     setLoading(true)
 
     try {
-      const response = await fetch(`http://localhost:8080/api/kitaplar/delete/${book.id}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/kitaplar/delete/${book.id}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`
@@ -92,45 +92,45 @@ export default function BookItem({ book, token, onBookUpdated, onBookDeleted }: 
 
   if (isEditing) {
     return (
-      <li className="p-4 bg-white border border-gray-200 rounded-lg">
+      <li className="p-4 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg">
         <form onSubmit={handleUpdate} className="space-y-3">
           <input
             type="text"
             value={formData.isim}
             onChange={(e) => setFormData({ ...formData, isim: e.target.value })}
-            className="w-full px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
+            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded focus:ring-2 focus:ring-blue-500"
             required
           />
           <input
             type="text"
             value={formData.yazar}
             onChange={(e) => setFormData({ ...formData, yazar: e.target.value })}
-            className="w-full px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
+            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded focus:ring-2 focus:ring-blue-500"
             required
           />
           <input
             type="number"
             value={formData.sayfaSayisi}
             onChange={(e) => setFormData({ ...formData, sayfaSayisi: parseInt(e.target.value) })}
-            className="w-full px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
+            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded focus:ring-2 focus:ring-blue-500"
             required
             min="1"
           />
           
-          {error && <p className="text-sm text-red-600">{error}</p>}
+          {error && <p className="text-sm text-red-600 dark:text-red-400">{error}</p>}
           
           <div className="flex gap-2">
             <button
               type="submit"
               disabled={loading}
-              className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 disabled:bg-gray-400"
+              className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 disabled:bg-gray-400 transition-colors"
             >
               {loading ? 'Saving...' : 'Save'}
             </button>
             <button
               type="button"
               onClick={() => setIsEditing(false)}
-              className="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300"
+              className="px-4 py-2 bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-200 rounded hover:bg-gray-300 dark:hover:bg-gray-500 transition-colors"
             >
               Cancel
             </button>
@@ -141,38 +141,38 @@ export default function BookItem({ book, token, onBookUpdated, onBookDeleted }: 
   }
 
   return (
-    <li className="p-4 bg-white border border-gray-200 rounded-lg flex justify-between items-start">
+    <li className="p-4 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg flex justify-between items-start hover:shadow-md transition-shadow">
       <div>
-  <p className="font-medium text-lg">{book.isim}</p>
-  <p className="text-sm text-gray-600">by {book.yazar}</p>
-  <div className="flex gap-3 mt-1">
-    <p className="text-xs text-gray-500">{book.sayfaSayisi} pages</p>
-    {book.category && (
-      <span className="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">
-        {book.category.isim}
-      </span>
-    )}
-  </div>
-</div>
+        <p className="font-medium text-lg text-gray-900 dark:text-white">{book.isim}</p>
+        <p className="text-sm text-gray-600 dark:text-gray-300">by {book.yazar}</p>
+        <div className="flex gap-3 mt-1 items-center">
+          <p className="text-xs text-gray-500 dark:text-gray-400">{book.sayfaSayisi} pages</p>
+          {book.category && (
+            <span className="text-xs bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-200 px-2 py-0.5 rounded-full font-medium">
+              {book.category.isim}
+            </span>
+          )}
+        </div>
+      </div>
       
       <div className="flex gap-2">
         <button
           onClick={() => setIsEditing(true)}
-          className="px-3 py-1 bg-blue-500 text-white text-sm rounded hover:bg-blue-600"
+          className="px-3 py-1 bg-blue-500 dark:bg-blue-600 text-white text-sm rounded hover:bg-blue-600 dark:hover:bg-blue-700 transition-colors"
           disabled={loading}
         >
           Edit
         </button>
         <button
           onClick={handleDelete}
-          className="px-3 py-1 bg-red-500 text-white text-sm rounded hover:bg-red-600"
+          className="px-3 py-1 bg-red-500 dark:bg-red-600 text-white text-sm rounded hover:bg-red-600 dark:hover:bg-red-700 transition-colors"
           disabled={loading}
         >
           {loading ? '...' : 'Delete'}
         </button>
       </div>
       
-      {error && <p className="text-sm text-red-600 mt-2">{error}</p>}
+      {error && <p className="text-sm text-red-600 dark:text-red-400 mt-2">{error}</p>}
     </li>
   )
 }
