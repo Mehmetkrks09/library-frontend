@@ -69,17 +69,18 @@ function App() {
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors">
       <nav className="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
         <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-gray-800 dark:text-white">
-            Library Management System
+          <h1 className="text-lg sm:text-2xl font-bold text-gray-800 dark:text-white">
+            <span className="hidden sm:inline">Library Management System</span>
+            <span className="sm:hidden">Library</span>
           </h1>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 sm:gap-4">
             <ThemeToggle />
-            <span className="text-gray-600 dark:text-gray-300">
+            <span className="hidden sm:inline text-gray-600 dark:text-gray-300 text-sm">
               Welcome, {localStorage.getItem("username")}
             </span>
             <button
               onClick={handleLogout}
-              className="bg-red-500 hover:bg-red-600 dark:bg-red-600 dark:hover:bg-red-700 text-white px-4 py-2 rounded transition-colors"
+              className="bg-red-500 hover:bg-red-600 dark:bg-red-600 dark:hover:bg-red-700 text-white px-3 sm:px-4 py-2 rounded transition-colors text-sm sm:text-base"
             >
               Logout
             </button>
@@ -87,19 +88,19 @@ function App() {
         </div>
       </nav>
 
-      <main className="max-w-7xl mx-auto px-4 py-8">
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 p-6">
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-xl font-semibold text-gray-800 dark:text-white">Books</h2>
+      <main className="max-w-7xl mx-auto px-4 py-4 sm:py-8">
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 p-4 sm:p-6">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-0 mb-4 sm:mb-6">
+            <h2 className="text-lg sm:text-xl font-semibold text-gray-800 dark:text-white">Books</h2>
             <AddBook token={token!} onBookAdded={fetchBooks} />
           </div>
           {loading ? (
             <Spinner />
           ) : books.length === 0 ? (
-            <div className="text-center py-16">
-              <p className="text-6xl mb-4">📚</p>
-              <p className="text-xl font-medium text-gray-700 dark:text-gray-200">No books yet</p>
-              <p className="text-gray-500 dark:text-gray-400 mt-1">
+            <div className="text-center py-12 sm:py-16">
+              <p className="text-5xl sm:text-6xl mb-4">📚</p>
+              <p className="text-lg sm:text-xl font-medium text-gray-700 dark:text-gray-200">No books yet</p>
+              <p className="text-sm sm:text-base text-gray-500 dark:text-gray-400 mt-1">
                 Click "+ Add Book" to add your first book!
               </p>
             </div>
