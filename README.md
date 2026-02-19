@@ -24,10 +24,15 @@ You can use the following test account to log in and try the application:
 
 ## 📸 Screenshots
 
+## 📱 Mobile 
+
+| Login Screen | Books Screen |
+|-------------|--------------|
+|![Mobile Login ](screenshots/Mobile-login.jpg) |![Mobile Login ](screenshots/Mobile-dashnoard.jpg) |
+
 ### Dark Mode
 ![Dashboard Dark Mode](screenshots/DarkList.png)
 *Dashboard with book management features in dark mode*
-
 ![Login Dark Mode](screenshots/LoginDark.png)
 *Clean and modern login interface with theme toggle*
 
