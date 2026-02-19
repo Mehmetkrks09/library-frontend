@@ -9,6 +9,19 @@ A modern full-stack web application for managing library books with secure JWT a
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-blue)
 ![Docker](https://img.shields.io/badge/Docker-Compose-blue)
 
+## 🌐 Live Demo
+
+The frontend application is live:  
+👉 https://library-frontend-sooty.vercel.app/
+
+## 🔐 Test Login
+
+You can use the following test account to log in and try the application:
+
+- **Username:** `test-user`
+- **Password:** `123456`
+
+
 ## 📸 Screenshots
 
 ### Dark Mode
